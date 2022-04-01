@@ -3,8 +3,10 @@ package com.example.sbhibernateshoppingcart.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 @Data
@@ -12,11 +14,13 @@ import java.util.Date;
 @NoArgsConstructor
 @Entity
 @Table(name = "Orders", uniqueConstraints = {@UniqueConstraint(columnNames = "Order_Num")})
-public class Order {
+public class Orders implements Serializable {
     @Id
     @Column(name = "ID", length = 50)
     private String id;
 
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreationTimestamp
     @Column(name = "Order_Date", nullable = false)
     private Date orderDate;
 
