@@ -14,8 +14,8 @@ import java.io.Serializable;
 @Table(name = "Order_Details")
 public class OrderDetail implements Serializable {
     @Id
-    @Column(name = "ID", length = 50, nullable = false)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ORDER_ID", nullable = false, //
@@ -27,12 +27,25 @@ public class OrderDetail implements Serializable {
             foreignKey = @ForeignKey(name = "ORDER_DETAIL_PROD_FK"))
     private Product product;
 
-    @Column(name = "Quantity", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "USER_ID", nullable = false, //
+            foreignKey = @ForeignKey(name = "ORDER_DETAIL_USER_FK"))
+    private User user;
+
+    @Column(name = "QUANTITY", nullable = false)
     private int quantity;
 
     @Column(name = "Price", nullable = false)
-    private double price;
+    private double price; // giá của sản phẩm
 
     @Column(name = "Amount", nullable = false)
-    private double amount;
+    private double amount; // tổng tiền = price * quantity
+
+    @Column(name= "is_check", columnDefinition = "boolean default false")
+    private boolean isCheck;
+
+    @Column(columnDefinition = "boolean default true")
+    private boolean isActive;
+
+
 }

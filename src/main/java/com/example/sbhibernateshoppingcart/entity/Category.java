@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -14,11 +15,17 @@ import java.io.Serializable;
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Entity
 @Table(name = "category")
-public class Category implements Serializable {
+public class Category extends Auditable<String> implements Serializable {
     @Id
-    @Column(name = "ID", length = 50, nullable = false)
-    private String id;
+    @Column(name = "id", length = 50, nullable = false)
+    private Long id;
 
     @Column(name = "Name", length = 255, nullable = false)
     private String name;
+
+    //List image of product
+    @Column(name = "product_id")
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    private List<Product> products;
+
 }

@@ -1,7 +1,7 @@
 package com.example.sbhibernateshoppingcart.controller;
 
 import com.example.sbhibernateshoppingcart.entity.Product;
-import com.example.sbhibernateshoppingcart.entity.ProductDto;
+import com.example.sbhibernateshoppingcart.dto.ProductDto;
 import com.example.sbhibernateshoppingcart.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -23,16 +23,16 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
-    @GetMapping("/product/{productId}")
-    public Product getProductById(@PathVariable(name="productId") String code){
-        return productService.getProductById(code);
-    }
-
-    @GetMapping("/product")
-    public List<Product> getProductByCategory(@RequestParam(value="category") String id){
-        return productService.getProductByCategory(id);
-    }
+//    @CrossOrigin(origins = "http://localhost:3000")
+//    @GetMapping("/product/{productId}")
+//    public Product getProductById(@PathVariable(name="productId") String code){
+//        return productService.getProductById(code);
+//    }
+//
+//    @GetMapping("/product")
+//    public List<Product> getProductByCategory(@RequestParam(value="category") String id){
+//        return productService.getProductByCategory(id);
+//    }
 
     @GetMapping("/product/category/{name}")
     public List<Product> getProductByCategoryName(@PathVariable(value="name") String name){
@@ -46,14 +46,14 @@ public class ProductController {
 
     }
 
-    @PostMapping("/product/update")
-    public Product updateProduct(@ModelAttribute Product product,
-                               @ModelAttribute(name = "imageFile")MultipartFile imageFile) throws IOException {
-        return  productService.updateProduct(product, imageFile);
-    }
+//    @PostMapping("/product/update")
+//    public Product updateProduct(@RequestBody Product product,
+//                               @ModelAttribute(name = "imageFile")MultipartFile imageFile) throws IOException {
+//        return  productService.updateProduct(product, imageFile);
+//    }
 
-    @GetMapping("/product/delete/{productId}")
-    public void deleteProduct(@PathVariable(name="productId") String code) throws IOException {
-        productService.deleteProduct(code);
-    }
+//    @GetMapping("/product/delete/{productId}")
+//    public void deleteProduct(@PathVariable(name="productId") String code) throws IOException {
+//        productService.deleteProduct(code);
+//    }
 }

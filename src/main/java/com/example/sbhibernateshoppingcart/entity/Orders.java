@@ -4,6 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
+import org.hibernate.annotations.GenericGenerator;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,20 +17,13 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "Orders", uniqueConstraints = {@UniqueConstraint(columnNames = "Order_Num")})
-public class Orders implements Serializable {
+@Table(name = "Orders")
+public class Orders extends Auditable<String> implements Serializable {
     @Id
-    @Column(name = "ID", length = 50)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @CreationTimestamp
-    @Column(name = "Order_Date", nullable = false)
-    private Date orderDate;
-
-    @Column(name = "Order_Num", nullable = false)
-    private int orderNum;
-
+    //Tong so tien da dat
     @Column(name = "Amount", nullable = false)
     private double amount;
 
@@ -41,5 +38,8 @@ public class Orders implements Serializable {
 
     @Column(name = "Customer_Phone", length = 128, nullable = false)
     private String customerPhone;
+
+    @Column(columnDefinition = "boolean default true")
+    private boolean isActive;
 
 }

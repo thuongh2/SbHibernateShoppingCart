@@ -2,7 +2,7 @@ package com.example.sbhibernateshoppingcart.service;
 
 import com.example.sbhibernateshoppingcart.entity.Category;
 import com.example.sbhibernateshoppingcart.entity.Product;
-import com.example.sbhibernateshoppingcart.entity.ProductDto;
+import com.example.sbhibernateshoppingcart.dto.ProductDto;
 import com.example.sbhibernateshoppingcart.repository.CategoryRepository;
 import com.example.sbhibernateshoppingcart.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +31,11 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public Product getProductById(String code) {
+    public Product getProductById(Long code) {
         return productRepository.findProductByCode(code);
     }
 
-    public List<Product> getProductByCategory(String category_id){
+    public List<Product> getProductByCategory(Long category_id){
         Category category = categoryRepository.findById(category_id).get();
         return  productRepository.findByCategory(category);
     }
@@ -55,34 +55,34 @@ public class ProductService {
 
         Product product1 = modelMapper.map(product, Product.class);
 
-        Category category = categoryRepository.findById(String.valueOf(product.getCategoryId())).get();
+        Category category = categoryRepository.findById(product.getCategoryId()).get();
         product1.setCategory(category);
-        product1.setImage(imageProduct);
+//        product1.setImage(imageProduct);
 
         return productRepository.save(product1);
     }
 
     public Product updateProduct(Product product, MultipartFile imageFile) throws IOException {
-        Product productUpdate = productRepository.findProductByCode(product.getCode());
+        Product productUpdate = productRepository.findProductByCode(product.getId());
         if(productUpdate == null){
             throw new IOException("Product not found");
         }
 
-        if(imageFile != null){
-            String imageProduct = cloudinaryService.uploadFile(imageFile);
-            productUpdate.setImage(imageProduct);
-        }
-
-        productUpdate.setCode(product.getCode());
-        productUpdate.setName(product.getName());
-        productUpdate.setPrice(product.getPrice());
-        productUpdate.setCreateDate(productUpdate.getCreateDate());
-        productUpdate.setCategory(product.getCategory());
+//        if(imageFile != null){
+//            String imageProduct = cloudinaryService.uploadFile(imageFile);
+//            productUpdate.setImage(imageProduct);
+//        }
+//
+//        productUpdate.setCode(product.getCode());
+//        productUpdate.setName(product.getName());
+//        productUpdate.setPrice(product.getPrice());
+//        productUpdate.setCreateDate(productUpdate.getCreateDate());
+//        productUpdate.setCategory(product.getCategory());
 
         return productRepository.save(productUpdate);
     }
 
-    public void deleteProduct(String productId) throws IOException {
+    public void deleteProduct(Long productId) throws IOException {
         Product product = productRepository.findProductByCode(productId);
 
         if(product == null){

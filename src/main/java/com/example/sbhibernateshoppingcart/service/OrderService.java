@@ -14,7 +14,7 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-    public Orders getOrders(){
-        return orderRepository.findById("OD01").orElse(null);
-    }
+//    public Orders getOrders(){
+//        return orderRepository.findById().orElse(null);
+//    }
 }
